@@ -19,6 +19,7 @@ services:
     restart: always
     ports:
       - '80:80'
+      - '5000:5000'
     networks:
       - local
     build:
