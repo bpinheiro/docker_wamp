@@ -19,7 +19,6 @@ services:
     restart: always
     ports:
       - '80:80'
-      - '5000:5000'
     networks:
       - local
     build:
@@ -27,6 +26,21 @@ services:
       dockerfile: dockerfile
     volumes:
       - "${PROJECT_PATH}:/var/www/html/"
+  mailpit:
+    image: axllent/mailpit
+    container_name: mailpit
+    restart: always
+    volumes:
+      - "${PROJECT_PATH}:/data"
+    ports:
+      - 8025:8025
+      - 1025:1025
+    environment:
+      MP_MAX_MESSAGES: 5000
+      MP_DATA_FILE: /data/mailpit.db
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+
 networks:
   local:
     driver: bridge
